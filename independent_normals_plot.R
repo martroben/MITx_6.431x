@@ -35,3 +35,33 @@ plotly::plot_ly(
       yaxis = list(title = "y"),
       zaxis = list(title = "P(X = x, Y = y)"))) %>%
   plotly::hide_colorbar()
+
+
+
+####################
+# squared gaussian #
+####################
+
+gaussian_values <- seq(-2, 2, length.out = n)
+# gaussian_vector <- dnorm(normal_values)
+
+gaussian_squared_matrix <- matrix(NA, n, n)
+for (x in 1:nrow(gaussian_squared_matrix)) {
+  for (y in 1:ncol(gaussian_squared_matrix)) {
+    gaussian_squared_matrix[x,y] <- exp(-(gaussian_values[x]^2 + gaussian_values[y]^2))
+  }
+}
+
+
+plotly::plot_ly(
+  x = ~gaussian_values,
+  y = ~gaussian_values,
+  z = ~gaussian_squared_matrix,
+  type = "surface",
+  alpha = 0.8) %>%
+  plotly::layout(
+    scene = list(
+      xaxis = list(title = "x"),
+      yaxis = list(title = "y"),
+      zaxis = list(title = "f(x,y)", range = list(0, 1.5)))) %>%
+  plotly::hide_colorbar()
